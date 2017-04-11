@@ -9,15 +9,7 @@ $(function () {
             str = unpack(rows,'Streptomycin'),
             neo = unpack(rows, 'Neomycin'),
             gram = unpack(rows, 'Gram.Staining'),
-            scale = 4500;
-        //console.log("sample" + bac);
-        sample =[],
-        bacName= [],
-            penData = [],
-            strData = [],
-            neoData = [],
-            gramType = [],
-            hoverText = [];
+        allBacteriaCollection =[];
         for (var i = 0; i < bac.length; i++) {
             var bacteriaCollection = {
                 name: bac[i],
@@ -26,53 +18,18 @@ $(function () {
                 neoValue: Math.log(neo[i]),
                 gramValue: gram[i]
             }
-            // var name = bac[i];
-            //     penValue = Math.log(pen[i]),
-            //     strValue = Math.log(str[i]),
-            //     neoValue = Math.log(neo[i]),
-            //     gramValue = gram[i];
-            // bacName.push(name);
-            // penData.push(penValue);
-            // strData.push(strValue);
-            // neoData.push(neoValue);
-            // gramType.push(gram);
-            //console.log(bacteriaCollection);
-            sample.push(bacteriaCollection);
+            allBacteriaCollection.push(bacteriaCollection);
         }
         var positiveGram = [];
         var negativeGram = [];
-        for (var i = 0; i < sample.length; i++ ) {
-            if (sample[i].gramValue === 'positive') {
-                positiveGram.push(sample[i]);
+        for (var i = 0; i < allBacteriaCollection.length; i++ ) {
+            if (allBacteriaCollection[i].gramValue === 'positive') {
+                positiveGram.push(allBacteriaCollection[i]);
             } else {
-                negativeGram.push(sample[i]);
+                negativeGram.push(allBacteriaCollection[i]);
             }
         }
-        console.log(positiveGram);
-
-        var penTrace = {
-            y: getName(sample),
-            x: getPenValue(sample),
-            mode: 'markers',
-            type: 'scatter',
-            marker: {size: 12}
-        };
-        var strTrace = {
-            y: getName(sample),
-            x: getStrValue(sample),
-            mode: 'markers',
-            type: 'scatter',
-            marker: {size: 12}
-        };
-        var neoTrace = {
-            y: getName(sample),
-            x: getNeoValue(sample),
-            mode: 'markers',
-            type: 'scatter',
-            marker: {size: 12}
-        };
         
-        //getPenValue(positiveGram);
         function getPenValue(object) {
             var returnArray = [];
             object.forEach((e) => {
@@ -101,36 +58,146 @@ $(function () {
             })
             return returnArray;
         };
-        var secondData = [penTrace, strTrace];
-        var secondLayout = { 
-            title:'Data Labels Hover'
+        function getGram(object) {
+            var returnArray = [];
+            object.forEach((e) => {
+                returnArray.push(e.gramValue);
+            })
+            return returnArray;
         };
-        Plotly.newPlot(firstViz,secondData,secondLayout);
-        // var firstCollection = [
-        //     {
-        //         x: bacName,
-        //         y: penData,
-        //         type: 'bar',
-        //         name: 'Penicilin',
-        //         showlegend: false
-        //     },
-        //     {
-        //         x: bacName,
-        //         y: strData,
-        //         type: 'bar',
-        //         name: 'Streptomycin',
-        //         showlegend: false
-        //     },
-        //     {
-        //         x: bacName,
-        //         y: neoData,
-        //         type: 'bar',
-        //         name: 'Neomycin',
-        //         showlegend: false
-        //     }
-        // ]
-        // var firstData = firstCollection;
-        // var firstLayout = {barmode: 'group'};
-        // Plotly.newPlot(firstViz,firstData,firstLayout);
+        function getAverage(array) {
+            var sum = 0;
+            for (var i= 0; i< array.length; i++) {
+                sum+= array[i];
+            }
+            return (sum/array.length);
+        }
+        
+        function concatArray(arrayOne, arrayTwo) {
+            var returnArray = arrayOne.concat(arrayTwo);
+            return returnArray;
+        }
+        
+        // first bar graph
+        var firstCollection = [
+            {
+                x: getName(allBacteriaCollection),
+                y: getPenValue(allBacteriaCollection),
+                type: 'scatter',
+                name: 'Penicilin',
+                marker: {
+                    size: 14
+                },
+                mode: 'lines+markers'
+            },
+            {
+                x: getName(allBacteriaCollection),
+                y: getStrValue(allBacteriaCollection),
+                type: 'scatter',
+                name: 'Streptomycin',
+                marker: {
+                    size: 14
+                },
+                mode: 'lines+markers',
+            },
+            {
+                x: getName(allBacteriaCollection),
+                y: getNeoValue(allBacteriaCollection),
+                type: 'scatter',
+                name: 'Neomycin',
+                marker: {
+                    size: 14
+                },
+                mode: 'lines+markers',
+            }
+        ]
+        var firstData = firstCollection;
+        var firstLayout = {
+            title: 'Antibiotic Effectiveness on Bacteria',
+            margin: {
+                b:150
+            },
+            xaxis: {
+                title: 'Bacteria Name'
+            },
+            yaxis: {
+                title: 'Log Minimum Inhibitory Concentration (MIC)',
+                zeroline: false
+            }
+        };
+        Plotly.newPlot(firstViz,firstData,firstLayout, {staticPlot:true});
+        
+        // second
+        var xAxis = concatArray(getGram(positiveGram),getGram(negativeGram));
+        var test = concatArray(getGram(positiveGram),getGram(negativeGram));
+        var secondData = [
+            {   
+                x: xAxis,
+                y: concatArray(getPenValue(positiveGram),getPenValue(negativeGram)),
+                name: 'Penicilin',
+                marker: {color: '#3D9970'},
+                type: 'box'  
+            },
+            {   
+                x: xAxis,
+                y: concatArray(getStrValue(positiveGram),getStrValue(negativeGram)),
+                name: 'Streptomycin',
+                marker: {color: '#FF4136'},
+                type: 'box'  
+            },
+            {   
+                x: xAxis,
+                y: concatArray(getNeoValue(positiveGram),getNeoValue(negativeGram)),
+                name: 'Neomycin',
+                marker: {color: '#FF851B'},
+                type: 'box'  
+            }
+        ];
+        var secondLayout = {
+            title: 'Antibiotic Minimum Inhibitory Concentration (MIC) on Gram-positive and Gram-negative Bacteria', 
+            xaxis: {
+                title: 'Gram Staining'
+            },
+            yaxis: {
+                title: 'Log Minimum Inhibitory Concentration (MIC)',
+                zeroline: false
+            },
+            boxmode: 'group'
+        };
+        Plotly.newPlot(secondViz,secondData,secondLayout, {staticPlot:true});
+
+        // third neg-pos bar chart
+        var thirdData = [
+            {
+                x: ['Penicilin', 'Streptomycin', 'Neomycin'],
+                y: [getAverage(getPenValue(positiveGram)), 
+                getAverage(getStrValue(positiveGram)), 
+                getAverage(getNeoValue(positiveGram))],
+                name: 'Gram-positive',
+                type: 'bar' 
+            },
+            {
+                x: ['Penicilin', 'Streptomycin', 'Neomycin'],
+                y: [getAverage(getPenValue(negativeGram)), 
+                getAverage(getStrValue(negativeGram)), 
+                getAverage(getNeoValue(negativeGram))],
+                name: 'Gram-negative',
+                type: 'bar',
+                marker: {
+                    color: 'rgb(171, 0, 0)'
+                } 
+            }
+        ];
+        var thirdLayout = {
+            title: 'Effectiveness of Antibiotics on Gram-positive and Gram-negative Bacteria',
+            xaxis: {
+                title: 'Antibiotic Name'
+            },
+            yaxis: {
+                title: 'Average Log Minimum Inhibitory Concentration (MIC)',
+                zeroline: false
+            },
+            barmode: 'group'};
+        Plotly.newPlot(thirdViz,thirdData,thirdLayout, {staticPlot:true});
     })
 });
