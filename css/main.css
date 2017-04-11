@@ -1,0 +1,13 @@
+#inner{
+    padding-left: 3em;
+    padding-right: 3em;
+}
+body {
+    overflow-x:hidden;
+}
+.jumbotron {
+    border-radius: 0 !important;
+}
+p {
+    text-indent: 50px;
+}

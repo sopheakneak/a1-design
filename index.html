@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Sopheak Neak">
+    <title>Assignment 1: Design</title>
+
+    <!--My stylesheet-->
+    <link rel="stylesheet" href="css/main.css">
+
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!--Plotly CDN-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- Load jQuery library -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!--My script-->
+    <script src="js/script.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>A1- Design</h1>
+            <p>By Sopheak Neak</p>
+        </div>
+
+        <div class="container" id="inner">
+            <main>
+                <p>After the World War II, antibiotics were considered as "wonder drugs", since they were an easy remedy for
+                    what had been intractable ailments. To learn which drug worked most effectively for which bacterial infection,
+                    performance of the three most popular antibiotics on 16 bacteria were gathered.</p>
+                <p>The values in the dataset represent the minimum inhibitory concentration (MIC), a measure of the effectiveness
+                    of the antibiotic, which represents the concentration of antibiotic required to prevent growth in vitro.
+                    The reaction of the bacteria to Gram staining is described by the covariate “gram staining”. Bacteria
+                    that are stained dark blue or violet are Gram-positive. Otherwise, they are Gram-negative.</p>
+                <h2>Visualization #1</h2>
+                <p>Which antibiotic is the most effective (has the lowest MIC) in preventing growth in vitro for differing bacterial
+                    infections?</p>
+                <div id="firstViz"></div>
+                <div class="container">
+                    <p>The dataset has an abundant data points that varied in range and sign, however, in order to capture a
+                        great multitude of data points, I’ve decided to utilize a dot plot for graphical encoding. The main
+                        visual decoding task, in term of amplifying understanding of the data, for this graph is comparing
+                        the value of Log MIC for each bacteria between the differing antibiotics.</p>
+                    <p>The most accurate elementary perceptual task is position along a common scale. A dot graph does a great
+                        job at easing the task of comparing values. Readers can easily distinguish if differing antibiotics
+                        have the same Log MIC by looking checking whether the dots are overlapping one another. In addition,
+                        the differing color of the dots give a good contrast, which helps reader easily distinguish which
+                        dot is of higher or lower value. </p>
+                    <p>I’ve decided to connect the lines between each dot in order to give users a better sense of separation
+                        between each bacteria. If the dots are not connected, readers will have a harder time comparing the
+                        high and low Log MIC value of antibiotics for each bacteria at a quick glance. Also, to my defense,
+                        the line does not add or introduce any out-of-scope data, because the value on the x axis is nominal.
+                        Hence, reader cannot make assumption or establish a non-introduced trend from looking at the lines.</p>
+                </div>
+                <h2>Visualization #2</h2>
+                <p>Which antibiotic is more effective (has the lowest MIC) on gram-positive bacteria and gram-negative bacteria?</p>
+                <div id="secondViz"></div>
+                <div class="container">
+                    <p>The main visual decoding task for this graph is comparing the distributing of value for antibiotics in
+                        gram-positive and in gram-negative bacteria; a box plot is a great graphical encoding tool to do
+                        so. A box plot utilizes the most accurate elementary perceptual task, which is comparing the position
+                        along the common scale. Readers can easily distinguish the difference of low, high, median, and IQR
+                        for each antibiotic. Because each antibiotics aligns next to one another, it enhances the accuracy
+                        of comparing the value and also gives readers a greater understanding of the antibiotic’s effective
+                        on differing type of gram staining.</p>
+                    <p>The design also keeps readers’ attention focus on one demographic of the data set. By providing a large
+                        difference in spacing for gram-positive and gram-negative bacteria, readers unconsciously comparing
+                        only the values in each gram stain. The sense of separation helps making the data more digestible.
+                        I also did not fully fill in the marker of the box, because I’d like provide readers the ability
+                        to see the graph value line as a mean to comparing the difference in position between antibiotics
+                        data point. In addition, I keep the color consistency of the antibiotics between the dot plot and
+                        this graph; this ensures that readers would not need to learn additional information on the data.</p>
+                </div>
+                <h2>Visualization #3</h2>
+                <p>On average, how do antibiotics perform on differing gram stain bacteria (gram-positive and gram-negative)?</p>
+                <div id="thirdViz"></div>
+                <div class="container">
+                    <p>The main visual decoding task for this bar graph is comparing the average Log MIC between gram-positive
+                        and gram-negative bacteria between differing antibiotics. Luckily, the visual decoding task can easily
+                        be graphical encoded using the most accurate elementary perceptual task: position along a common
+                        scale. A grouped bar graph allows reader to easily comparing values between one another. Therefore,
+                        to compare average Log MIC between gram-positive and gram-negative, readers can simply compare how
+                        each bar stands, taller or shorter, next to one another.</p>
+                    <p>In addition, since the main visual decoding task consists of only comparing gram-positive to gram-negative,
+                        the graph;s design has the advantage in accomplishing the elementary perceptual task of comparing
+                        position along a common scale. Because there are only two bars for each antibiotic, the bars are
+                        guaranteed to stand next to each other. This enhances the ability for readers to comparing the difference
+                        regardless of the threshold of difference; whether the threshold of difference is high or low, the
+                        fact that it stands next to each other, it increases the accuracy of distinguishing the position
+                        of each value on the graph.</p>
+                </div>
+            </main>
+
+        </div>
+    </div>
+</body>
+
+</html>
