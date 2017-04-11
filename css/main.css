@@ -8,3 +8,6 @@ body {
 .jumbotron {
     border-radius: 0 !important;
 }
+p {
+    text-indent: 50px;
+}
