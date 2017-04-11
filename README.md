@@ -6,5 +6,3 @@ By clicking on the provided link, you have created your own private repo in our 
 Please edit this README.md file to provide us with a link to your hosted visualization (either on GitHub, or your student server).
 
 Submit the URL of this GitHub repository to Canvas to turn in the assignment. You must make the submission _on time_ to Canvas in order to receive credit.
-# interactive-data-visualization
-# interactive-data-visualization
